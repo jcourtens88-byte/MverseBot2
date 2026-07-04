@@ -4,7 +4,7 @@ const { Client, GatewayIntentBits } = require('discord.js');
 console.log("BOT START");
 
 // 🔒 Zet hier jouw Discord ID
-const OWNER_ID = "JOUW_DISCORD_ID_HIER";
+const OWNER_ID = "1109183147968581713";
 
 const client = new Client({
     intents: [
