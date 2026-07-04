@@ -3,6 +3,9 @@ const { Client, GatewayIntentBits } = require('discord.js');
 
 console.log("BOT START");
 
+// 🔒 Zet hier jouw Discord ID
+const OWNER_ID = "JOUW_DISCORD_ID_HIER";
+
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -11,24 +14,28 @@ const client = new Client({
     ]
 });
 
-client.once('clientReady', () => {
+client.once('ready', () => {
     console.log(`✅ ${client.user.tag} is online!`);
 });
 
 client.on('messageCreate', (message) => {
 
-    // Negeer andere bots
+    // Negeer bots
     if (message.author.bot) return;
+
+    const args = message.content.split(' ');
 
     // !ping
     if (message.content === '!ping') {
         return message.reply('Pong! 🏓');
     }
 
-    // Splits het bericht in stukjes
-    const args = message.content.split(' ');
+    // Alleen owner mag whitelist commands gebruiken
+    if (args[0] === '!wl' && message.author.id !== OWNER_ID) {
+        return message.reply("❌ Alleen de owner kan dit commando gebruiken.");
+    }
 
-    // Alleen doorgaan als het commando !wl is
+    // Alleen doorgaan als het !wl is
     if (args[0] !== '!wl') return;
 
     // Lees whitelist.json
