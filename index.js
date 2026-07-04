@@ -4,7 +4,7 @@ const { Client, GatewayIntentBits } = require('discord.js');
 console.log("BOT START");
 
 // 🔒 Zet hier jouw Discord ID
-const OWNER_ID = "1109183147968581713";
+const OWNER_ID = "JOUW_DISCORD_ID_HIER";
 
 const client = new Client({
     intents: [
@@ -30,13 +30,13 @@ client.on('messageCreate', (message) => {
         return message.reply('Pong! 🏓');
     }
 
-    // Alleen owner mag whitelist commands gebruiken
-    if (args[0] === '!wl' && message.author.id !== OWNER_ID) {
-        return message.reply("❌ Alleen de owner kan dit commando gebruiken.");
-    }
-
     // Alleen doorgaan als het !wl is
     if (args[0] !== '!wl') return;
+
+    // 🔒 OWNER CHECK (blokkeert alles meteen)
+    if (message.author.id !== OWNER_ID) {
+        return message.reply("❌ Alleen de owner kan dit commando gebruiken.");
+    }
 
     // Lees whitelist.json
     const data = JSON.parse(fs.readFileSync('whitelist.json', 'utf8'));
